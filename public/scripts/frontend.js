@@ -19,7 +19,7 @@ jQuery(document).ready(function() {
             })
 
             setTimeout(function(){
-                $('#all-tweets').html(html)
+                $('#all-tweets').append(html)
             }, 1000)
 
         })
