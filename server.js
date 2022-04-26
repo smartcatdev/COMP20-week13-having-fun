@@ -24,7 +24,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/index.html'));
 })
 
-
+/**
+ * Retrieve all tweets from the database
+ */
 app.get('/api/tweets', async (req, res) => {
     // connect to the database
     const db = await connectToDB()
@@ -32,11 +34,14 @@ app.get('/api/tweets', async (req, res) => {
     // grab the data from the collection
     const collection = await db.collection('tweets')
     const data = await collection.find({}).toArray()
-
+    
     // return the data as a JSON object
     res.json(data)
 })
 
+/**
+ * Posts tweet submissions, which get stored in the database
+ */
 app.post('/api/tweets', async (req, res) => {
     // connect to the database
     const db = await connectToDB()
@@ -49,7 +54,10 @@ app.post('/api/tweets', async (req, res) => {
     // store the tweet in the MongoDB database
     const tweet = await collection.insertOne({text})
     // return the tweet as a JSON object
-    res.send(tweet)
+    res.send({
+        status: true,
+        textResponse: 'Tweet has been inserted!'
+    })
 })
 
 
